@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Timer and Details Page</title>
+    <style>
+        body {
+            background-color: #1e1f29;
+            color: #ffffff;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            text-align: center;
+            padding: 20px;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        h1 {
+            font-size: 32px;
+            color: #ff4d4d;
+            margin: 0;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .timerSection {
+            background-color: #33334d;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        h2 {
+            color: #66ccff;
+            font-size: 24px;
+            margin: 0 0 20px 0;
+        }
+
+        .timer {
+            color: #ffffff;
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+
+        .details {
+            color: #ffffff;
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+
+        .charges {
+            color: #ffffff;
+            font-size: 18px;
+        }
+
+        .vacateButton {
+            font-family: inherit;
+            font-size: 18px;
+            background: linear-gradient(to bottom, #4dc7d9 0%,#66a6ff 100%);
+            color: white;
+            padding: 0.8em 1.2em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: none;
+            border-radius: 25px;
+            box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s;
+        }
+
+        .vacateButton:hover {
+            background-color: #ff3333;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Findmyspot: Timer and Details</h1>
+    </header>
+    <div class="container">
+        <div class="timerSection">
+            <h2>Parking Timer</h2>
+            <div class="timer">00:00:00</div>
+            <div class="details" id="selectedSpot">
+                <!-- Selected spot will be displayed here -->
+            </div>
+            <div class="charges">
+                <p>Parking Charges:</p>
+                <p>First Hour: Rs. 0</p>
+                <p>Subsequent Hours: Rs. 10 per hour</p>
+            </div>
+            <div style="display: flex; justify-content: center; margin-top: 20px;">
+                <button class="vacateButton">Vacate</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Move your script here -->
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            // Get the timer element
+            const timerElement = document.querySelector('.timer');
+
+            // Retrieve the selected spot from the cookie
+            const cookies = document.cookie.split(';');
+            let selectedSpot = null;
+            for (const cookie of cookies) {
+                const [name, value] = cookie.trim().split('=');
+                if (name === 'selectedSpot') {
+                    selectedSpot = value;
+                    break;
+                }
+            }
+
+            // Display the selected spot
+            const detailsElement = document.getElementById('selectedSpot');
+            if (selectedSpot) {
+                detailsElement.innerHTML = `Selected Spot: ${selectedSpot}`;
+            }
+
+            // Set the initial time
+            let hours = 0;
+            let minutes = 0;
+            let seconds = 0;
+
+            // Update the timer every second
+            setInterval(() => {
+                seconds++;
+                if (seconds >= 60) {
+                    minutes++;
+                    seconds = 0;
+                }
+                if (minutes >= 60) {
+                    hours++;
+                    minutes = 0;
+                }
+
+                // Format the time as HH:MM:SS
+                const formattedTime = `${padNumber(hours)}:${padNumber(minutes)}:${padNumber(seconds)}`;
+                timerElement.textContent = formattedTime;
+            }, 1000);
+
+            // Helper function to pad single-digit numbers with leading zeros
+            function padNumber(number) {
+                return number.toString().padStart(2, '0');
+            }
+
+            // Vacate button click event
+            const vacateButton = document.querySelector('.vacateButton');
+            vacateButton.addEventListener('click', () => {
+                // Redirect to the Parking Charges and Payment page
+                window.location.href = 'charges.html';
+            });
+        });
+    </script>
+</body>
+</html>
