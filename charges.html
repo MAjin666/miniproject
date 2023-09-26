@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parking Charges and Payment</title>
+    <style>
+        body {
+            background-color: #1e1f29;
+            color: #ffffff;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            text-align: center;
+            padding: 20px;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        h1 {
+            font-size: 32px;
+            color: #ff4d4d;
+            margin: 0;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .chargesSection {
+            background-color: #33334d;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        h2 {
+            color: #66ccff;
+            font-size: 24px;
+            margin: 0 0 20px 0;
+        }
+
+        .charges {
+            color: #ffffff;
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+
+        .paymentOptions {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .paymentOption {
+            background-color: #ff4d4d;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .paymentOption:hover {
+            background-color: #ff3333;
+        }
+    </style>
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            // Get the charges element
+            const chargesElement = document.querySelector('.charges');
+
+            // Function to calculate parking charges
+            function calculateCharges() {
+                // Get the current time
+                const currentTime = new Date();
+                
+                // Calculate the time duration in minutes
+                const minutesParked = (currentTime - startTime) / (1000 * 60);
+
+                // Calculate the charges (Rs. 10 per minute)
+                const totalCharges = Math.ceil(minutesParked) * 10;
+
+                return totalCharges;
+            }
+
+            // Store the start time when the user enters the parking lot
+            const startTime = new Date();
+
+            // Calculate the charges
+            const totalCharges = calculateCharges();
+
+            // Display the charges
+            chargesElement.innerHTML = `Total Charges: Rs. ${totalCharges}`;
+        });
+    </script>
+</head>
+<body>
+    <header>
+        <h1>Findmyspot: Parking Charges and Payment</h1>
+    </header>
+    <div class="container">
+        <div class="chargesSection">
+            <h2>Parking Charges</h2>
+            <div class="charges">
+                <p>Total Charges: Rs. 0</p> <!-- Default value -->
+            </div>
+            <div class="paymentOptions">
+                <button class="paymentOption">Google Pay</button>
+                <button class="paymentOption">PhonePe</button>
+                <button class="paymentOption">Paytm</button>
+                <button class="paymentOption">BHIM UPI</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
